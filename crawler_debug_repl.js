@@ -1,6 +1,47 @@
 const puppeteer = require('puppeteer');
 const repl = require('repl'); // Node.js REPL for interactive debugging
 
+const scrollDiv = async (page, selector) => {
+  await page.evaluate(async (selector) => {
+    const targetElement = document.querySelector(selector);
+    if (!targetElement) {
+      console.log('Target element not found');
+      return;
+    }
+
+    // Find the closest scrollable container
+    const container = targetElement.closest('div[style*="overflow"]') || targetElement;
+
+    const distance = 200; // Scroll distance
+    const delay = 100; // Delay between scrolls
+
+    const scroll = () => {
+      return new Promise((resolve) => {
+        const interval = setInterval(() => {
+          const maxScrollTop = container.scrollHeight - container.clientHeight;
+          const currentScrollTop = container.scrollTop;
+
+          container.scrollBy(0, distance);
+
+          // If we reach the bottom, stop scrolling
+          if (currentScrollTop >= maxScrollTop) {
+            clearInterval(interval);
+            resolve();
+          }
+        }, delay);
+      });
+    };
+
+    await scroll();
+    console.log('Scrolling completed');
+  }, selector);
+};
+
+
+// Scroll the div with the specified class
+//  const selector = '.sc-fNEhIj.fSVDhv'; // Change this as needed
+//  await scrollDiv(page, selector);
+
 (async () => {
   const browser = await puppeteer.launch({
     headless: false, // Keep it false to interact with the browser
