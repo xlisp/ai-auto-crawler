@@ -53,9 +53,13 @@ const scrollAndParse = async (page, selector) => {
         // Find the name using the aria-label attribute from the img tag
         const name = element.querySelector('img[aria-label]')?.getAttribute('aria-label');
 
+        //console.log("=====", {code: issueCode, name: name, text: parsedText})
+
         // If all data is available and issueCode is unique, add it to the Map
         if (issueCode && parsedText && name && !issueMap.has(issueCode)) {
           issueMap.set(issueCode, { name, text: parsedText });
+          console.log("=====", { code: issueCode, name: name, text: parsedText }); // Log the parsed data
+
         }
       });
 
@@ -159,7 +163,7 @@ const scrollDiv = async (page, selector) => {
   // ----------
   // Scroll the div and parse the content
   const selector = '.sc-fNEhIj.fSVDhv';  // The div class to scroll and parse
-  await scrollAndParse(page, selector);
+  // need run in repl ---- await scrollAndParse(page, selector);
   // ------
 
   // Enter REPL mode to interact with the `page` object for debugging
