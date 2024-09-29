@@ -1,5 +1,5 @@
-// Initialize a Map to store data grouped by name
-const nameMap = new Map();
+// Initialize a Map to store unique issueCode as key and the corresponding data
+const issueMap = new Map();
 
 // Get all elements with the specified class
 const elements = document.querySelectorAll('.sc-DZnBE.itXJai');
@@ -15,19 +15,30 @@ elements.forEach(element => {
     // Find the name using the aria-label attribute from the img tag
     const name = element.querySelector('img[aria-label]')?.getAttribute('aria-label');
 
-    // If all data is available, add it to the Map grouped by name
-    if (issueCode && parsedText && name) {
-        // Check if the name already exists in the Map
-        if (!nameMap.has(name)) {
-            nameMap.set(name, []);  // Initialize an array for this name
-        }
-        // Add the issueCode and text to the corresponding name
-        nameMap.get(name).push({ issueCode, text: parsedText });
+    // If all data is available and issueCode is unique, add it to the Map
+    if (issueCode && parsedText && name && !issueMap.has(issueCode)) {
+        issueMap.set(issueCode, { name, text: parsedText });
     }
 });
 
-// Log the contents of the Map grouped by name
-nameMap.forEach((issues, name) => {
+// Initialize a new Map to group by 'name'
+const groupedByName = new Map();
+
+// Group the issueMap by 'name'
+issueMap.forEach((value, issueCode) => {
+    const { name, text } = value;
+    
+    // If the name doesn't exist, initialize an empty array
+    if (!groupedByName.has(name)) {
+        groupedByName.set(name, []);
+    }
+
+    // Push the issueCode and corresponding text into the array for that name
+    groupedByName.get(name).push({ issueCode, text });
+});
+
+// Log the grouped results by 'Name'
+groupedByName.forEach((issues, name) => {
     console.log(`Name: ${name}`);
     issues.forEach(issue => {
         console.log(`  Issue Code: ${issue.issueCode}, Text: ${issue.text}`);
