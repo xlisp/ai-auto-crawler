@@ -39,7 +39,7 @@ issueMap.forEach((value, issueCode) => {
 
 // Log the grouped results by 'Name'
 groupedByName.forEach((issues, name) => {
-    console.log(`Name: ${name}`);
+    console.log(`======= Name: ${name}`);
     issues.forEach(issue => {
         console.log(`  Issue Code: ${issue.issueCode}, Text: ${issue.text}`);
     });
