@@ -156,6 +156,12 @@ const scrollDiv = async (page, selector) => {
     console.log(`Issue: ${issueCode}, Name: ${name}, Text: ${text}`);
   });
 
+  // ----------
+  // Scroll the div and parse the content
+  const selector = '.sc-fNEhIj.fSVDhv';  // The div class to scroll and parse
+  await scrollAndParse(page, selector);
+  // ------
+
   // Enter REPL mode to interact with the `page` object for debugging
   console.log('Entering REPL mode. You can interact with the logged-in page.');
   const replServer = repl.start('> ');
