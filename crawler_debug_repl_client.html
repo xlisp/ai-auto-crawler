@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puppeteer REPL Client</title>
+</head>
+<body>
+    <textarea id="codeInput" rows="10" cols="50">
+// Example: Get the page title
+await page.evaluate(() => document.title);
+
+// Example: Log to server console
+console.log('This will appear in the server console');
+
+// Example: Use page.evaluate
+await page.evaluate(() => {
+    console.log('This will log in the browser console');
+    return document.querySelector('.sc-DZnBE.itXJai')?.textContent;
+});
+    </textarea>
+    <br>
+    <button onclick="sendCode()">Execute</button>
+    <br>
+    <pre id="output"></pre>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8080');
+        const output = document.getElementById('output');
+        const codeInput = document.getElementById('codeInput');
+
+        socket.onopen = () => {
+            console.log('Connected to server');
+        };
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.error) {
+                output.textContent = 'Error: ' + data.error;
+            } else {
+                output.textContent = JSON.stringify(data.result, null, 2);
+            }
+        };
+
+        socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        function sendCode() {
+            const code = codeInput.value;
+            socket.send(code);
+        }
+    </script>
+</body>
+</html>
+
