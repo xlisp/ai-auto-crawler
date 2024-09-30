@@ -7,14 +7,14 @@
 </head>
 <body>
     <textarea id="codeInput" rows="10" cols="50">
-// Example: Get the page title
-await page.evaluate(() => document.title);
+// Example: Get the page title , client  no need await
+page.evaluate(() => document.title);
 
 // Example: Log to server console
 console.log('This will appear in the server console');
 
-// Example: Use page.evaluate
-await page.evaluate(() => {
+// Example: Use page.evaluate , no need await
+page.evaluate(() => {
     console.log('This will log in the browser console');
     return document.querySelector('.sc-DZnBE.itXJai')?.textContent;
 });
