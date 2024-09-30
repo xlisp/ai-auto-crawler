@@ -35,9 +35,9 @@ const repl = require('repl'); // Node.js REPL for interactive debugging
   }
 
   // Wait for the content to load on the new page
-  await page.waitForSelector('.weui-desktop-mass-send__list', {
-    timeout: 30000 // Wait for up to 30 seconds
-  });
+  //await page.waitForSelector('.weui-desktop-mass-send__list', {
+  //  timeout: 30000 // Wait for up to 30 seconds
+  //});
 
   console.log('Publish history page loaded.');
 
