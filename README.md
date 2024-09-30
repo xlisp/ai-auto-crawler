@@ -1,4 +1,4 @@
-# ai-auto-crawler
+# ai-auto-crawler: puppeteer + autogen
 
 ```sh
 npm install 
