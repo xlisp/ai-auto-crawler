@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "ai-auto-crawler"
+version = "0.1.0"
+description = ""
+authors = ["stevechan <chanshunli@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11, <3.12"
+pyautogen = "^0.2.33"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
